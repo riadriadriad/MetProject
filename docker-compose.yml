@@ -1,0 +1,20 @@
+version: '1.1'
+services:
+  db:
+    image: mysql
+    container_name: db_container
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_USER: riad
+      MYSQL_PASSWORD: 1234
+      MYSQL_DATABASE: dbmet
+  web:
+    build: .
+    ports:
+      - "8082:8082"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: jdbc:mysql://db_container:3306/dbmet

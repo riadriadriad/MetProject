@@ -47,5 +47,10 @@ public class ProduitServiceImpl implements ProduitService{
 		
 		return pr.findById(code).get();
 	}
+	@Override
+	public String generateCode(Produit produit) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

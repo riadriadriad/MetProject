@@ -1,4 +1,4 @@
-package com.riad.app;
+package com.riad.app.controllers.restControllers;
 
 import java.net.URI;
 import java.util.List;
@@ -97,7 +97,7 @@ public class StockController {
 		Long id=Long.parseLong(idFamille);
 		return fps.familleParId(id);
 	}
-	@PreAuthorize("hasAuthority('GC')")
+	@PreAuthorize("hasAuthority('SCOPE_GESTIONNAIRE_COMMERCIAL')")
 	@PostMapping("/produits")
 	public ResponseEntity<Produit> ajouterProduit(String code,String nomProduit,double prix,Long idFamille) {
 		Produit produit=Produit.builder()
@@ -110,19 +110,18 @@ public class StockController {
 		return ResponseEntity.created(URI.create("/stock/produits/"+produitEnr.getCode())).body(produitEnr);
 		
 	}	
-	@PreAuthorize("hasAuthority('GC')")
+	@PreAuthorize("hasAuthority('GESTIONNAIRE_COMMERCIAL')")
 	@PostMapping("/familleProduit")
 	public ResponseEntity<FamilleProduit> ajouterFP(String libille) {
 		FamilleProduit fpEnr=fps.ajouterFP(libille);
 		return ResponseEntity.created(URI.create("/stock/famillesProduit/"+fpEnr.getId())).body(fpEnr);
 		}
-	@PreAuthorize("hasAuthority('GC')")
+	@PreAuthorize("hasAuthority('GESTIONNAIRE_COMMERCIAL')")
 	@PostMapping("/depots")
 	public  ResponseEntity<Depot> ajouterDepot(String adresse,Long idRegion) {
 		Depot depotEnr = ds.ajouterDepot(rs.regionParId(idRegion), adresse);
 		return ResponseEntity.created(URI.create("/stock/depot"+depotEnr.getNumDepot())).body(depotEnr);
 	}
-	
 	@PreAuthorize("hasAuthority('GD')")
 	@PostMapping("/depot{numDepot}/produit{codeProduit}")
 	public ResponseEntity<TempoStock> ajouterQuantiteProduit(@PathVariable Long numDepot,@PathVariable String codeProduit,int qte){ 
@@ -131,7 +130,7 @@ public class StockController {
 		TempoStock ts=tss.create(depot, produit, qte);
 		return ResponseEntity.created(URI.create("/stock/depot"+numDepot)).body(ts);
 	}
-	@PreAuthorize("hasAuthority('GC')")
+	@PreAuthorize("hasAuthority('GESTIONNAIRE_COMMERCIAL')")
 	@PostMapping("/tempo{id}/valider")
 	public ResponseEntity<Depot> validerQuantiteProduit( @PathVariable Long id){ 
 		TempoStock ts=tss.tempoStockParId(id);

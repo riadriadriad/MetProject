@@ -16,6 +16,7 @@ import com.riad.app.services.clentsCommercial.ClientService;
 import com.riad.app.services.clentsCommercial.CommercialService;
 import com.riad.app.services.clentsCommercial.GroupeClientService;
 import com.riad.app.services.clentsCommercial.PortefeuilleService;
+import com.riad.app.services.clentsCommercial.ResponsableCommercialService;
 import com.riad.app.services.stock.DepotService;
 import com.riad.app.services.stock.FPService;
 import com.riad.app.services.stock.ProduitDispoService;
@@ -32,7 +33,8 @@ public class MetProjectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(MetProjectApplication.class, args);
 	}
-	CommandLineRunner start(ProduitService ps,RegionService rs,FPService fps,DepotService ds,ProduitDispoService pds,ClientService cs,CommercialService comms,GroupeClientService gcs,PortefeuilleService pfs) {
+	@Bean
+	CommandLineRunner start(ProduitService ps,RegionService rs,FPService fps,DepotService ds,ProduitDispoService pds,ClientService cs,CommercialService comms,GroupeClientService gcs,PortefeuilleService pfs,ResponsableCommercialService rcs) {
 		
 		rs.ajouterRegion("Tanger-Tétouan-Al Hoceïma");
 		rs.ajouterRegion("L'Oriental");
@@ -106,13 +108,12 @@ public class MetProjectApplication {
 		pfs.ajouterPF("pfMeknes", rs.regionParId(3L));
 		pfs.ajouterPF("pf", rs.regionParId(2L));
 		
+		rcs.ajouterResponsableCommercia("riad", "Abdelghani", "riad", "riadriad","password");
+		
 		return args->{
 			
 			
 		};
 	}
-	@Bean
-	public PasswordEncoder pe() {
-		return new BCryptPasswordEncoder();
-	}
+
 }

@@ -2,6 +2,7 @@ package com.riad.app.services.clentsCommercial;
 
 import java.util.List;
 
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,6 @@ public class CommercialServiceImpl implements CommercialService{
 				.email(email)
 				.username(username)
 				.password(pe.encode(password))
-				.role("C")
 				.build();
 		return commr.save(commercial);
 	}
@@ -60,6 +60,23 @@ public class CommercialServiceImpl implements CommercialService{
 		Portefeuille pf=pfs.pfParId(idPF);
 		comm.setPortefeuille(pf);
 		return commr.save(comm);
+	}
+
+	@Override
+	public boolean exist(String username) {
+		List<Commercial> comms=commr.findAll();
+		for(Commercial c:comms) {
+			if(c.getUsername().equals(username)) return true;
+		}
+		return false;
+	}
+
+	@Override
+	public Commercial ByUsername(String username) {
+		if(exist(username)) return commr.findByUsername(username);
+		else {
+			throw new UsernameNotFoundException("user not found");
+		}
 	}
 
 }

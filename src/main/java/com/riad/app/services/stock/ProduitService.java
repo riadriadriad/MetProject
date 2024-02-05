@@ -13,6 +13,7 @@ public interface ProduitService {
 	public void modifierProduit(Produit produit);
 	public List<Produit> chercherProduit(String mc);
 	public Produit produitParId(String code);
+	public String generateCode(Produit produit);
 	
 	
 

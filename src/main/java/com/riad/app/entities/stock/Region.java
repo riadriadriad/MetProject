@@ -2,8 +2,6 @@ package com.riad.app.entities.stock;
 
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -23,7 +21,6 @@ public class Region {
 	private Long numRegion;
 	@Column(unique=true,length=191)
 	private String nomRegion;
-	@JsonManagedReference
 	@OneToMany(mappedBy="region")
 	private List<Depot> depots;
 }

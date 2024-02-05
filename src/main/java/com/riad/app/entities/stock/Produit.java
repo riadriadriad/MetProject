@@ -3,8 +3,6 @@ package com.riad.app.entities.stock;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.riad.app.entities.clients.ProduitCommande;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,6 +29,7 @@ public class Produit {
 	 @JsonBackReference
 	@ManyToOne(fetch=FetchType.LAZY)
 	private FamilleProduit famille;
+	@JsonBackReference
 	@OneToMany(mappedBy="produit")
 	private List<ProduitDispo> produitDispo;
 	

@@ -11,6 +11,8 @@ public interface CommercialService {
 	public void supprimerCommercial(Long idCommercial);
 	public List<Commercial> chercherCommercial(String mc);
 	public Commercial affecterPFCommercial(Long idCommercial,Long idPF);
+	public boolean exist(String username);
+	public Commercial ByUsername(String username);
 	
 	
 

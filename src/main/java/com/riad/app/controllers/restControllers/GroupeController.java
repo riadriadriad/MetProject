@@ -1,4 +1,4 @@
-package com.riad.app;
+package com.riad.app.controllers.restControllers;
 
 import java.net.URI;
 import java.util.List;

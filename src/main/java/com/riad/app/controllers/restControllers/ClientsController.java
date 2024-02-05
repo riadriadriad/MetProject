@@ -1,4 +1,4 @@
-package com.riad.app;
+package com.riad.app.controllers.restControllers;
 
 import java.net.URI;
 import java.util.List;
@@ -25,13 +25,15 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/clients")
 @RequiredArgsConstructor
 public class ClientsController {
+	
 	private final ClientService cs;
 	private final ClientRepository cr;
+	@PreAuthorize("hasAuthority('GESTIONNAIRE_COMMERCIAL')")
 	@GetMapping
 	public ResponseEntity<List<Client>> allclients(){
-		return ResponseEntity.ok(cs.allClients());
+		return ResponseEntity.ok(cs.allClients());	
 	}
-	@PreAuthorize("hasAuthority('GC')")
+	@PreAuthorize("hasAuthority('GESTIONNAIRE_COMMERCIAL')")
 	@PostMapping
 	public ResponseEntity<Client> ajouterClient(String nom,String prenom,String email,String cin,String adresse,double plafond,TypeClient tc){
 		Client client=cs.ajouterClient(nom, prenom, cin, email, adresse, plafond,tc);
@@ -49,27 +51,27 @@ public class ClientsController {
 		return ResponseEntity.ok(clients);
 	}
 	
-	@PreAuthorize("hasAuthority('GC')")
+	@PreAuthorize("hasAuthority('GESTIONNAIRE_COMMERCIAL')")
 	@PutMapping("/client{id}")
 	public ResponseEntity<Client> modifier(@PathVariable Long id,String nom,String prenom,String email,String cin,String adresse,double plafond,TypeClient tc){
 		Client client=cs.modifierClient(id, nom, prenom, cin, email, adresse, plafond, tc);
 		return ResponseEntity.ok(client);
 	}
 	
-	@PreAuthorize("hasAuthority('GC')")
+	@PreAuthorize("hasAuthority('GESTIONNAIRE_COMMERCIAL')")
 	@DeleteMapping("/client{id}")
 	public ResponseEntity<Client> supprimer(@PathVariable Long id){
 		cs.supprimerClient(id);
 		return ResponseEntity.ok().build();
 	}
 	
-	@PreAuthorize("hasAuthority('GC')")
+	@PreAuthorize("hasAuthority('GESTIONNAIRE_COMMERCIAL')")
 	@PutMapping("/client{id}/pf")
 	public ResponseEntity<Client> ajouterClientPf(@PathVariable Long id,Long idPf){
 		cs.affecterClientPF(id, idPf);
 		return ResponseEntity.ok().build();
 	}
-	@PreAuthorize("hasAuthority('GC')")
+	@PreAuthorize("hasAuthority('GESTIONNAIRE_COMMERCIAL')")
 	@PutMapping("/client{id}/dpf")
 	public ResponseEntity<Client> spprimerClientPf(@PathVariable Long id){
 		Client cl=cr.findById(id).get();
@@ -79,7 +81,7 @@ public class ClientsController {
 		return ResponseEntity.ok().build();
 	}
 	
-	@PreAuthorize("hasAuthority('GC')")
+	@PreAuthorize("hasAuthority('GESTIONNAIRE_COMMERCIAL')")
 	@PutMapping("/groupe{idGroupe}/client{idClient}")
 		public ResponseEntity<Client> ajouterClientGroupe(@PathVariable Long idGroupe,@PathVariable Long idClient){
 		cs.affecterClientGroupe(idClient, idGroupe);
